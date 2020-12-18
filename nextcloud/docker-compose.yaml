@@ -46,10 +46,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.middlewares.nextcloud-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nextcloud-http.entrypoints=web"
-      - "traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.moutaouadi.ml`)" #Domain anpassen
+      - "traefik.http.routers.nextcloud-http.rule=Host(`apache.moutaouadi.ml`)" #Domain anpassen
       - "traefik.http.routers.nextcloud-http.middlewares=nextcloud-https@docker"
       - "traefik.http.routers.nextcloud.entrypoints=web-secure"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.moutaouadi.ml`)" #Domain anpassen
+      - "traefik.http.routers.nextcloud.rule=Host(`apache.moutaouadi.ml`)" #Domain anpassen
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=default"
       - "traefik.http.routers.nextcloud.middlewares=nextcloud-dav,secHeaders@file"

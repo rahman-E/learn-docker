@@ -10,6 +10,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /var/run/docker.sock:/var/run/docker.sock
       - $PWD/config:/etc/traefik
+    labels: #aem: I added this line
+      - traefik.frontend.rule=Host:traefik.moutaouadi.ml #aem: I added this line
     #labels:
     #  - "traefik.enable=true"
     #  - "traefik.http.routers.traefik.rule=Host(`traefik.example.com) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
@@ -24,6 +26,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080" #aem: I added this line
     restart: always
 
 networks:
