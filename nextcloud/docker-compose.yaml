@@ -12,8 +12,8 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /var/docker/nextcloud/database:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD= # Datenbank Passwort wählen
-      - MYSQL_PASSWORD= # Datenbank Passwort wählen, wird bei der Nextcloudinstallation abgefragt
+      - MYSQL_ROOT_PASSWORD= utest123 # Datenbank Passwort wählen
+      - MYSQL_PASSWORD= nextcloud-db_passw # Datenbank Passwort wählen, wird bei der Nextcloudinstallation abgefragt
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_INITDB_SKIP_TZINFO=1 # Behebt die bekannten Startprobleme der Datenbank
@@ -25,7 +25,7 @@ services:
     networks:
         - default
     restart: always
-    command: redis-server --requirepass YOURPASSWORD # Redis Passwort wählen
+    command: redis-server --requirepass nextcloud-redis_passw # Redis Passwort wählen
     
   nextcloud-app:
     image: nextcloud
@@ -36,7 +36,7 @@ services:
       - nextcloud-redis
     environment:
         REDIS_HOST: nextcloud-redis
-        REDIS_HOST_PASSWORD: YOURPASSWORD # Redis Passwort von oben
+        REDIS_HOST_PASSWORD: nextcloud-redis_passw # Redis Passwort von oben
     volumes: 
       - /var/docker/nextcloud/app:/var/www/html
       # - EXTERNES DATENVERZEICHNIS:/var/www/html/data 
@@ -46,10 +46,10 @@ services:
       - "traefik.enable=true"
       - "traefik.http.middlewares.nextcloud-https.redirectscheme.scheme=https"
       - "traefik.http.routers.nextcloud-http.entrypoints=web"
-      - "traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.example.com`)" #Domain anpassen
+      - "traefik.http.routers.nextcloud-http.rule=Host(`nextcloud.moutaouadi.ml`)" #Domain anpassen
       - "traefik.http.routers.nextcloud-http.middlewares=nextcloud-https@docker"
       - "traefik.http.routers.nextcloud.entrypoints=web-secure"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.example.com`)" #Domain anpassen
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.moutaouadi.ml`)" #Domain anpassen
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=default"
       - "traefik.http.routers.nextcloud.middlewares=nextcloud-dav,secHeaders@file"
